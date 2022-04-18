@@ -7,8 +7,8 @@ const nextConfig = {
   },
   images: {
     //this is were shopify stores all of the store images
-    domains: ['cdn.shopify.com']
-  }
+    domains: ['cdn.shopify.com'],
+  },
 }
 
 module.exports = nextConfig
