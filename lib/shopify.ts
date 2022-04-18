@@ -61,8 +61,6 @@ export async function getProductsInCollection() {
 }
 `
   const response = await ShopifyData(query)
-  console.log(response)
-  console.log("hello next")
 
   return response?.data?.collectionByHandle?.products?.edges ?? []
 }
