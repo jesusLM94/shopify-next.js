@@ -14,10 +14,16 @@ export interface Product {
     title: string
     handle: string
     images: { edges: Images[] }
+    priceRange: {
+      minVariantPrice: {
+        amount: string
+      }
+    }
   }
 }
 
 const Home = ({ products }: { products: Product[] }) => {
+  console.log(products)
   return (
     <div>
       <ProductList products={products} />

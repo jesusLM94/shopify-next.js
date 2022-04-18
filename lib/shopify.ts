@@ -33,7 +33,7 @@ async function ShopifyData(query: string) {
 
 export async function getProductsInCollection() {
   const query = `{
-  collection(handle: "comedores") {
+  collectionByHandle(handle: "frontpage") {
     title
     products(first: 10) {
       edges {
@@ -41,6 +41,11 @@ export async function getProductsInCollection() {
           id
           title
           handle
+          priceRange {
+            minVariantPrice {
+              amount
+            }
+          }
           images(first: 3) {
             edges {
               node {
@@ -56,6 +61,8 @@ export async function getProductsInCollection() {
 }
 `
   const response = await ShopifyData(query)
+  console.log(response)
+  console.log("hello next")
 
-  return response?.data?.collection?.products?.edges ?? []
+  return response?.data?.collectionByHandle?.products?.edges ?? []
 }
