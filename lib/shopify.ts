@@ -64,3 +64,49 @@ export async function getProductsInCollection() {
 
   return response?.data?.collectionByHandle?.products?.edges ?? []
 }
+
+export async function getAllProducts() {
+  const query = `{
+  products(first: 10) {
+    edges {
+      node {
+        handle
+        id
+      }
+    }
+  }
+}
+`
+  const response = await ShopifyData(query)
+  console.log(response?.data?.products?.edges)
+
+  return response?.data?.products?.edges ?? []
+}
+
+export async function getProduct(handle: string) {
+  const query = `{
+  productByHandle(handle: "${handle}") {
+    id
+    title
+    handle
+    description
+    images(first: 5) {
+      edges {
+        node {
+          url
+          altText
+        }
+      }
+    }
+    options {
+      name
+      values
+      id
+    }
+  }
+}
+`
+  const response = await ShopifyData(query)
+
+  return response?.data?.productByHandle ?? {}
+}

@@ -23,7 +23,6 @@ export interface Product {
 }
 
 const Home = ({ products }: { products: Product[] }) => {
-  console.log(products)
   return (
     <div>
       <ProductList products={products} />
