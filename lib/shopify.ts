@@ -78,7 +78,6 @@ export async function getAllProducts() {
 }
 `
   const response = await ShopifyData(query)
-  console.log(response?.data?.products?.edges)
 
   return response?.data?.products?.edges ?? []
 }
