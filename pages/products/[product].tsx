@@ -2,33 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import { getAllProducts, getProduct } from '../../lib/shopify'
 import ProductForm from '../../components/ProductForm'
-
-interface ProductForPaths {
-  node: {
-    handle: string
-    id: string
-  }
-}
-
-interface Product {
-  id: string
-  title: string
-  handle: string
-  description: string
-  options: {
-    name: string
-    values: string[]
-    id: string
-  }[]
-  images: {
-    edges: {
-      node: {
-        url: string
-        altText: string
-      }
-    }[]
-  }
-}
+import { Product, ProductPaths } from '../../lib/Types'
 
 const ProductPage = ({ product }: { product: Product }) => {
   const image = product.images.edges[0].node
@@ -50,7 +24,7 @@ const ProductPage = ({ product }: { product: Product }) => {
 export async function getStaticPaths() {
   const products = await getAllProducts()
 
-  const paths = products.map((product: ProductForPaths) => ({
+  const paths = products.map((product: ProductPaths) => ({
     params: {
       product: product.node.handle.toString(),
     },

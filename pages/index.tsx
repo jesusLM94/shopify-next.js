@@ -1,28 +1,8 @@
 import { getProductsInCollection } from '../lib/shopify'
 import ProductList from '../components/ProductList'
+import { CollectionProduct } from '../lib/Types'
 
-interface Images {
-  node: {
-    altText: string
-    url: string
-  }
-}
-
-export interface Product {
-  node: {
-    id: string
-    title: string
-    handle: string
-    images: { edges: Images[] }
-    priceRange: {
-      minVariantPrice: {
-        amount: string
-      }
-    }
-  }
-}
-
-const Home = ({ products }: { products: Product[] }) => {
+const Home = ({ products }: { products: CollectionProduct[] }) => {
   return (
     <div>
       <ProductList products={products} />
