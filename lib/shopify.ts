@@ -102,6 +102,23 @@ export async function getProduct(handle: string) {
       values
       id
     }
+    variants (first: 25) {
+      edges {
+        node {
+          selectedOptions {
+            name
+            value
+          }
+          image {
+            url
+            altText
+          }
+          title
+          id
+          price
+        }
+      }
+    }
   }
 }
 `

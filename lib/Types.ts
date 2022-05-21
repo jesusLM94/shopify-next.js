@@ -26,16 +26,30 @@ export interface ProductPaths {
   }
 }
 
+export interface Option {
+  name: string
+  values: string[]
+  id: string
+}
+
+export interface VariantNode {
+  selectedOptions: {
+    name: string
+    value: string
+  }[]
+  image: { url: string; altText: string }
+  title: string
+  id: string
+  price: string
+}
+
 export interface Product {
   id: string
   title: string
   handle: string
   description: string
-  options: {
-    name: string
-    values: string[]
-    id: string
-  }[]
+  options: Option[]
+  variants: { edges: { node: VariantNode }[] }
   images: {
     edges: {
       node: {
