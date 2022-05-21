@@ -19,7 +19,6 @@ const ProductForm = ({ product }: { product: Product }) => {
     {},
   )
 
-  console.log(defaultOptions)
   const [selectedOptions, setSelectedOptions] = React.useState(defaultOptions)
 
   const setOptions = (optionName: string, optionValue: string) => {
