@@ -1,9 +1,9 @@
-import { Product } from '../pages'
 import Link from 'next/link'
 import Image from 'next/image'
+import { CollectionProduct } from '../lib/Types'
 import { formatter } from '../utils/helpers'
 
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = ({ product }: { product: CollectionProduct }) => {
   const { handle, title, priceRange } = product.node
   const { url, altText } = product.node.images.edges[0].node
   const price = priceRange.minVariantPrice.amount
@@ -17,10 +17,12 @@ const ProductCard = ({ product }: { product: Product }) => {
           </div>
         </div>
         <h3 className="mt-4 text-lg font-medium text-gray-900">{title}</h3>
-        <p className="mt-1 text-sm text-gray-700">{
-          // @ts-ignore
-          // ignore until these types are updated by Typescript
-          formatter.format(price)}
+        <p className="mt-1 text-sm text-gray-700">
+          {
+            // @ts-ignore
+            // ignore until these types are updated by Typescript
+            formatter.format(price)
+          }
         </p>
       </a>
     </Link>
