@@ -15,7 +15,7 @@ const ProductPage = ({ product }: { product: Product }) => {
             <Image src={image.url} alt={image.altText} layout="fill" objectFit="cover" />
           </div>
         </div>
-        <ProductForm />
+        <ProductForm product={product} />
       </div>
     </div>
   )
