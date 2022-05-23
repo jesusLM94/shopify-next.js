@@ -126,3 +126,55 @@ export async function getProduct(handle: string) {
 
   return response?.data?.productByHandle ?? {}
 }
+
+export async function createCheckout(variantId: string, quantity: number) {
+  const query = `mutation {
+  checkoutCreate(input: {lineItems: [{variantId: "${variantId}", quantity: ${quantity} }]}) {
+    checkout {
+      id
+      webUrl
+    }
+  }
+}
+`
+  const response = await ShopifyData(query)
+
+  return response.data.checkoutCreate?.checkout ?? []
+}
+
+type LineItem = {
+  id: string
+  variantQuantity: number
+}
+
+export async function updateCheckout(id: string, lineItems: LineItem[]) {
+  const lineItemsObject = lineItems.map((item: LineItem) => {
+    return `{
+      variantId: "${item.id}",
+      quantity:  ${item.variantQuantity}
+    }`
+  })
+
+  const query = `
+  mutation {
+    checkoutLineItemsReplace(lineItems: [${lineItemsObject}], checkoutId: "${id}") {
+      checkout {
+        id
+        webUrl
+        lineItems(first: 25) {
+          edges {
+            node {
+              id
+              title
+              quantity
+            }
+          }
+        }
+      }
+    }
+  }`
+
+  const response = await ShopifyData(query)
+
+  return response.data.checkoutLineItemsReplace.checkout ?? []
+}
