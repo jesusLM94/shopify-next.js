@@ -1,4 +1,4 @@
-import React, { ReactElement, createContext, useState } from 'react'
+import React, { ReactElement, createContext, useState, useEffect } from 'react'
 import { createCheckout, updateCheckout } from '../lib/shopify'
 
 type CartItem = {
@@ -27,6 +27,21 @@ export default function ShopProvider({ children }: { children: ReactElement }) {
   const [cartOpen, setCartOpen] = useState<boolean>(false)
   const [checkoutId, setCheckoutId] = useState<string>('')
   const [checkoutUrl, setCheckoutUrl] = useState<string>('')
+
+  useEffect(() => {
+    if (localStorage.checkout_id) {
+      const cartObject = JSON.parse(localStorage.checkout_id)
+
+      if (cartObject[0].id) {
+        setCart([cartObject[0]])
+      } else if (cartObject[0].length > 0) {
+        setCart([...cartObject[0]])
+      }
+
+      setCheckoutId(cartObject[1].id)
+      setCheckoutUrl(cartObject[1].webUrl)
+    }
+  }, [])
 
   const addToCart = async (newItem: CartItem) => {
     if (cart.length === 0) {
