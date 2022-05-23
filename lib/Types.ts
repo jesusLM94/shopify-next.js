@@ -59,3 +59,18 @@ export interface Product {
     }[]
   }
 }
+
+export type ReduceReturnType = {
+  [key: string]: string
+}
+
+export type VariantOptions = {
+  id: string
+  title: string
+  handle: string
+  image: string
+  options: ReduceReturnType
+  variantTitle: string
+  variantPrice: string
+  variantQuantity: number
+}

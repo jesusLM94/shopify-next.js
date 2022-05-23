@@ -2,22 +2,7 @@ import React, { useContext, useState } from 'react'
 import ProductOptions from './ProductOptions'
 import { CartContext } from '../context/shopContext'
 import { formatter } from '../utils/helpers'
-import { Product, VariantNode } from '../lib/Types'
-
-type ReduceReturnType = {
-  [key: string]: string
-}
-
-type VariantOptions = {
-  id: string
-  title: string
-  handle: string
-  image: string
-  options: ReduceReturnType
-  variantTitle: string
-  variantPrice: string
-  variantQuantity: number
-}
+import { Product, VariantNode, VariantOptions, ReduceReturnType } from '../lib/Types'
 
 const ProductForm = ({ product }: { product: Product }) => {
   const { title, variants, options } = product
