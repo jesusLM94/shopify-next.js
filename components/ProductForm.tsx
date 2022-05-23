@@ -62,7 +62,7 @@ const ProductForm = ({ product }: { product: Product }) => {
 
     setSelectedOptions(selection)
 
-    allVariantOptions.map((item) => {
+    allVariantOptions.map((item: VariantOptions) => {
       if (JSON.stringify(item.options) === JSON.stringify(selection)) {
         setSelectedVariant(item)
       }
