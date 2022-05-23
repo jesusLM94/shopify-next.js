@@ -1,14 +1,27 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import ProductOptions from './ProductOptions'
+import { CartContext } from '../context/shopContext'
 import { formatter } from '../utils/helpers'
-import { Product } from '../lib/Types'
+import { Product, VariantNode } from '../lib/Types'
 
 type ReduceReturnType = {
   [key: string]: string
 }
 
+type VariantOptions = {
+  id: string
+  title: string
+  handle: string
+  image: string
+  options: ReduceReturnType
+  variantTitle: string
+  variantPrice: string
+  variantQuantity: number
+}
+
 const ProductForm = ({ product }: { product: Product }) => {
   const { title, variants, options } = product
+  const { addToCart } = useContext(CartContext)
 
   const defaultOptions = options.reduce<ReduceReturnType>(
     (accum: ReduceReturnType, option: { name: string; values: string[] }) => {
@@ -19,12 +32,40 @@ const ProductForm = ({ product }: { product: Product }) => {
     {},
   )
 
-  const [selectedOptions, setSelectedOptions] = React.useState(defaultOptions)
+  const allVariantOptions = variants.edges?.map((variant: { node: VariantNode }) => {
+    const allOptions: ReduceReturnType = {}
+
+    variant.node.selectedOptions.map((item: { name: string; value: string }) => {
+      allOptions[item.name] = item.value
+    })
+
+    return {
+      id: variant.node.id,
+      title: product.title,
+      handle: product.handle,
+      image: variant.node.image?.url,
+      options: allOptions,
+      variantTitle: variant.node.title,
+      variantPrice: variant.node.price,
+      variantQuantity: 1,
+    }
+  })
+
+  const [selectedOptions, setSelectedOptions] = useState<ReduceReturnType>(defaultOptions)
+  const [selectedVariant, setSelectedVariant] = useState<VariantOptions>(allVariantOptions[0])
 
   const setOptions = (optionName: string, optionValue: string) => {
-    setSelectedOptions({
+    const selection = {
       ...selectedOptions,
       [optionName]: optionValue,
+    }
+
+    setSelectedOptions(selection)
+
+    allVariantOptions.map((item) => {
+      if (JSON.stringify(item.options) === JSON.stringify(selection)) {
+        setSelectedVariant(item)
+      }
     })
   }
 
@@ -49,7 +90,10 @@ const ProductForm = ({ product }: { product: Product }) => {
           />
         )
       })}
-      <button className="bg-black rounded-lg text-white px-2 py-3 hover:bg-gray-800">
+      <button
+        onClick={() => addToCart(selectedVariant)}
+        className="bg-black rounded-lg text-white px-2 py-3 hover:bg-gray-800"
+      >
         Add to Cart
       </button>
     </div>
