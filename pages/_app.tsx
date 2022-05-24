@@ -1,12 +1,18 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
 import Layout from '../components/Layout'
+import ShopProvider from '../context/shopContext'
+import { useRouter } from 'next/router'
+import type { AppProps } from 'next/app'
+import '../styles/globals.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter()
+
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <ShopProvider>
+      <Layout>
+        <Component {...pageProps} key={router.asPath} />
+      </Layout>
+    </ShopProvider>
   )
 }
 

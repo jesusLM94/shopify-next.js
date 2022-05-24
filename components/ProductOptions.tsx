@@ -1,12 +1,26 @@
 import React from 'react'
 
-interface Props {
-  //Tamaño
+type ReduceReturnType = {
+  [key: string]: string
+}
+
+type VariantOptions = {
+  id: string
+  title: string
+  handle: string
+  image: string
+  options: ReduceReturnType
+  variantTitle: string
+  variantPrice: number
+  variantQuantity: number
+}
+
+type Props = {
   name: string
-  //Mediano, Grande, etc
   values: string[]
   setOptions: (optionName: string, optionValue: string) => void
   selectedOptions: { [key: string]: string }
+  selectedVariant?: VariantOptions
 }
 
 const ProductOptions = ({ name, values, selectedOptions, setOptions }: Props) => {
