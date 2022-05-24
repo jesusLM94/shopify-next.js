@@ -2,17 +2,13 @@ import React, { useContext } from 'react'
 import Link from 'next/link'
 import MiniCart from './MiniCart'
 import { CartContext } from '../context/shopContext'
-
-type CartItem = {
-  id: string
-  variantQuantity: number
-}
+import { VariantOptions } from '../lib/Types'
 
 const Nav = () => {
   const { cartOpen, setCartOpen, cart } = useContext(CartContext)
 
   let cartQuantity = 0
-  cart.map((item: CartItem) => {
+  cart.map((item: VariantOptions) => {
     return (cartQuantity += item?.variantQuantity)
   })
 

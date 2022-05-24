@@ -1,16 +1,12 @@
 import React, { ReactElement, createContext, useState, useEffect } from 'react'
 import { createCheckout, updateCheckout } from '../lib/shopify'
-
-type CartItem = {
-  id: string
-  variantQuantity: number
-}
+import { VariantOptions } from '../lib/Types'
 
 interface CartContextI {
-  cart: CartItem[]
+  cart: VariantOptions[]
   cartOpen: boolean
   setCartOpen: (cartOpen: boolean) => void
-  addToCart: (newItem: CartItem) => void
+  addToCart: (newItem: VariantOptions) => void
   checkoutUrl: string
   removeCartItem: (itemToRemove: string) => void
 }
@@ -25,7 +21,7 @@ const CartContext = createContext<CartContextI>({
 })
 
 export default function ShopProvider({ children }: { children: ReactElement }) {
-  const [cart, setCart] = useState<CartItem[]>([])
+  const [cart, setCart] = useState<VariantOptions[]>([])
   const [cartOpen, setCartOpen] = useState<boolean>(false)
   const [checkoutId, setCheckoutId] = useState<string>('')
   const [checkoutUrl, setCheckoutUrl] = useState<string>('')
@@ -45,7 +41,7 @@ export default function ShopProvider({ children }: { children: ReactElement }) {
     }
   }, [])
 
-  const addToCart = async (newItem: CartItem) => {
+  const addToCart = async (newItem: VariantOptions) => {
     setCartOpen(true)
     if (cart.length === 0) {
       setCart([newItem])
@@ -56,7 +52,7 @@ export default function ShopProvider({ children }: { children: ReactElement }) {
 
       localStorage.setItem('checkout_id', JSON.stringify([newItem, checkout]))
     } else {
-      let newCart: { id: string; variantQuantity: number }[] = []
+      let newCart: VariantOptions[] = []
       let added = false
 
       cart.map((item) => {
@@ -78,7 +74,7 @@ export default function ShopProvider({ children }: { children: ReactElement }) {
   }
 
   async function removeCartItem(itemToRemove: string) {
-    const updatedCart = cart.filter((item: CartItem) => item.id !== itemToRemove)
+    const updatedCart = cart.filter((item: VariantOptions) => item.id !== itemToRemove)
 
     setCart(updatedCart)
     const newCheckout = await updateCheckout(checkoutId, updatedCart)
