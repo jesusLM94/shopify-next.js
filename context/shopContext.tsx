@@ -12,6 +12,7 @@ interface CartContextI {
   setCartOpen: (cartOpen: boolean) => void
   addToCart: (newItem: CartItem) => void
   checkoutUrl: string
+  removeCartItem: (itemToRemove: string) => void
 }
 
 const CartContext = createContext<CartContextI>({
@@ -20,6 +21,7 @@ const CartContext = createContext<CartContextI>({
   setCartOpen: () => {},
   addToCart: () => {},
   checkoutUrl: '',
+  removeCartItem: () => {},
 })
 
 export default function ShopProvider({ children }: { children: ReactElement }) {
@@ -44,6 +46,7 @@ export default function ShopProvider({ children }: { children: ReactElement }) {
   }, [])
 
   const addToCart = async (newItem: CartItem) => {
+    setCartOpen(true)
     if (cart.length === 0) {
       setCart([newItem])
       const checkout = await createCheckout(newItem.id, newItem.variantQuantity)
@@ -74,8 +77,22 @@ export default function ShopProvider({ children }: { children: ReactElement }) {
     }
   }
 
+  async function removeCartItem(itemToRemove: string) {
+    const updatedCart = cart.filter((item: CartItem) => item.id !== itemToRemove)
+
+    setCart(updatedCart)
+    const newCheckout = await updateCheckout(checkoutId, updatedCart)
+    localStorage.setItem('checkout_id', JSON.stringify([updatedCart, newCheckout]))
+
+    if (cart.length === 1) {
+      setCartOpen(false)
+    }
+  }
+
   return (
-    <CartContext.Provider value={{ cart, cartOpen, setCartOpen, addToCart, checkoutUrl }}>
+    <CartContext.Provider
+      value={{ cart, cartOpen, setCartOpen, addToCart, checkoutUrl, removeCartItem }}
+    >
       {children}
     </CartContext.Provider>
   )

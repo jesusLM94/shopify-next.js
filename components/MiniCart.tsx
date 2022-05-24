@@ -8,7 +8,7 @@ import { VariantOptions } from '../lib/Types'
 
 const MiniCart = ({ cart }: { cart: VariantOptions[] }) => {
   const cancelButtonRef = useRef<HTMLButtonElement>(null)
-  const { cartOpen, setCartOpen, checkoutUrl } = useContext(CartContext)
+  const { cartOpen, setCartOpen, checkoutUrl, removeCartItem } = useContext(CartContext)
 
   let cartTotal = 0
   cart.map((item: VariantOptions) => {
@@ -109,6 +109,7 @@ const MiniCart = ({ cart }: { cart: VariantOptions[] }) => {
                                       <button
                                         type="button"
                                         className="font-medium text-gray-900 hover:text-gray-800"
+                                        onClick={() => removeCartItem(product.id)}
                                       >
                                         Remove
                                       </button>
