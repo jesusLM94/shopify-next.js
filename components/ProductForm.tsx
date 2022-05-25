@@ -57,7 +57,7 @@ const ProductForm = ({ product }: { product: Product }) => {
   return (
     <div className="rounded-2xl p-4 shadow-lg flex flex-col w-full md:w-1/3">
       <h2 className="text-2xl font-bold">{title}</h2>
-      <span className="pb-6">
+      <span className="pb-3">
         {
           // @ts-ignore
           // ignore until these types are updated by Typescript
@@ -77,7 +77,7 @@ const ProductForm = ({ product }: { product: Product }) => {
       })}
       <button
         onClick={() => addToCart(selectedVariant)}
-        className="bg-black rounded-lg text-white px-2 py-3 hover:bg-gray-800"
+        className="bg-black rounded-lg text-white px-2 py-3 hover:bg-gray-800 mt-3"
       >
         Add to Cart
       </button>
