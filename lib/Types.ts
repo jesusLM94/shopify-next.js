@@ -1,4 +1,4 @@
-interface Images {
+export type Images = {
   node: {
     altText: string
     url: string
