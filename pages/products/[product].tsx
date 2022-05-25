@@ -25,7 +25,11 @@ const ProductPage = ({ product }: { product: Product }) => {
         <div className="w-full max-w-md border bg-white rounded-2xl overflow-hidden shadow-lg md:w-1/2">
           <div className="relative h-96 w-full">
             <Swiper
-              style={{ '--swiper-navigation-color': '#fff', '--swiper-pagination-color': '#fff' }}
+              style={
+                // @ts-ignore
+                //Leave until Swiper fixes this
+                { '--swiper-navigation-color': '#fff', '--swiper-pagination-color': '#fff' }
+              }
               navigation
               pagination={{ clickable: true }}
               className="h-96 rounded-2xl"
