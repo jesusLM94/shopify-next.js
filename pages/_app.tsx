@@ -6,6 +6,7 @@ import 'swiper/scss'
 import 'swiper/scss/navigation'
 import 'swiper/scss/pagination'
 import '../styles/globals.css'
+import '../styles/hero.scss'
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
