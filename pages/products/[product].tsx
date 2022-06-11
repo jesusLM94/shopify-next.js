@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react'
 import Image from 'next/image'
 import ProductForm from '../../components/ProductForm'
+import RecommendedList from '../../components/RecommendedList'
 import { getAllProducts, getProduct } from '../../lib/shopify'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import SwiperCore, { Navigation, Pagination } from 'swiper'
@@ -8,6 +9,11 @@ import { Product, ProductPaths, Images } from '../../lib/Types'
 
 const ProductPage = ({ product }: { product: Product }) => {
   const images: ReactElement[] = []
+
+  const relatedProducts =
+    product.collections.edges[1]?.node?.products?.edges ??
+    product.collections.edges[0]?.node?.products?.edges ??
+    []
 
   product.images.edges.map((image: Images, i: number) => {
     images.push(
@@ -41,6 +47,10 @@ const ProductPage = ({ product }: { product: Product }) => {
         </div>
         <ProductForm product={product} />
       </div>
+      <p className="pt-16 space-y-8 md:space-x-4 lg:space-x-8 max-w-3xl w-11/12 mx-auto">
+        {product.description}
+      </p>
+      <RecommendedList current={product.id} products={relatedProducts} />
     </div>
   )
 }
