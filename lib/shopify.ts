@@ -85,6 +85,34 @@ export async function getAllProducts() {
 export async function getProduct(handle: string) {
   const query = `{
   productByHandle(handle: "${handle}") {
+    collections(first: 2) {
+      edges {
+        node {
+          products(first: 5) {
+            edges {
+              node {
+                priceRange {
+                  minVariantPrice {
+                    amount
+                  }
+                }
+                handle
+                title
+                id
+                images(first: 3) {
+                  edges {
+                    node {
+                      url
+                      altText
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
     id
     title
     handle
