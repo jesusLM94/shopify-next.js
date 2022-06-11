@@ -58,6 +58,15 @@ export interface Product {
       }
     }[]
   }
+  collections: {
+    edges: {
+      node: {
+        products: {
+          edges: CollectionProduct[]
+        }
+      }
+    }[]
+  }
 }
 
 export type ReduceReturnType = {
